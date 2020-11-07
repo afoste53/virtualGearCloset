@@ -1,0 +1,23 @@
+{
+  "name": "virtualgearcloset",
+  "version": "1.0.0",
+  "description": "comp 426 final project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/afoste53/virtualGearCloset.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/afoste53/virtualGearCloset/issues"
+  },
+  "homepage": "https://github.com/afoste53/virtualGearCloset#readme",
+  "dependencies": {
+    "bulma": "^0.9.1",
+    "react": "^17.0.1"
+  }
+}
