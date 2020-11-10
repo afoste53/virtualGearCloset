@@ -30,11 +30,15 @@ export default function Welcome(){
                         <h3 class="subtitle">The Answer to All Your Gear Organizing Needs</h3>
                     </div>
                 </div>
-                <div class="container">
+                <div class="container columns">
+                    <div class="column is-one-fourth"></div>
+                    <div class="column is-one-half">
                     {hasAccount === true && <Login />}
                     {hasAccount === false && <CreateAccount/>}
                     <button class="button is-info is-light is-inverted is-outlined">{firstButton}</button>
     <button class="button is-info is-light is-inverted is-outlined" onClick={handleClick}>{secondButton}</button>
+                    </div>
+                    <div class="column is-fourth"></div>
                 </div>
                 
             </div>

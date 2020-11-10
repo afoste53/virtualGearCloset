@@ -3,8 +3,8 @@ import 'bulma/css/bulma.css';
 import './App.css';
 
 export default function Login(){
-    return(<form>
-            <strong>Login </strong>
+    return(<form class="has-text-bold has-text-white">
+            <strong class="has-text-white">Login </strong>
             <br/>
             <field>
                 <label>Email</label>
