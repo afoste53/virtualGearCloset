@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Login from './Login';
+import Welcome from './Welcome';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Login />
+    <Welcome />
   </React.StrictMode>,
   document.getElementById('root')
 );

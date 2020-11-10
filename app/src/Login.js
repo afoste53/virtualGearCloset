@@ -1,10 +1,19 @@
 import React from 'react';
-import 'bulma/css/bulma.css'
+import 'bulma/css/bulma.css';
+import './App.css';
 
 export default function Login(){
-    return(
-        <div class="hero">
-            <h1 class="title">Welcome to Virtual Gear Closet!</h1>
-        </div>
-    );
+    return(<form>
+            <strong>Login </strong>
+            <br/>
+            <field>
+                <label>Email</label>
+                <input class="input is-large seeThrough" type="text" placeholder="Username"/>
+            </field>
+            <field>
+                <label>Password</label>
+                <input class="input is-large seeThrough" type="password" placeholder="Password"/> 
+            </field>
+            
+        </form>);
 }
