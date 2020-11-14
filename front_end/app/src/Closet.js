@@ -15,8 +15,8 @@ export default function Closet () {
 
 
 
-    return(<div class="container is-max-desktop">
-        <ul class="closet">
+    return(<div className="container is-max-desktop">
+        <ul className="closet">
             
         </ul>
 
