@@ -1,10 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Welcome from './Welcome';
+import Wrapper from './Wrapper';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Welcome />
+    <Wrapper />
   </React.StrictMode>,
   document.getElementById('root')
 );

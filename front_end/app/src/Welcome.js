@@ -50,15 +50,14 @@ export default function Welcome(){
             }
         console.log(newData);
         if(newData != null){
-
-            ReactDOM.render(<User userObj={newData} />, document.getElementById('root'));
+            
+            ReactDOM.render(<User userObj={newData} />, document.getElementById('rooted'));
         }
     }
     
-    return(
-        <div className="header-image">
-            <div className="hero is-fullheight">
-                <div className="hero-body"id="welcome">
+    return(<>
+        
+                <div className="hero-body"id="rooted">
                     <div>
                         <h1 className="title has-text-bold">Welcome to Virtual Gear Closet!</h1>
                         <h3 className="subtitle">The Answer to All Your Gear Organizing Needs</h3>
@@ -75,8 +74,6 @@ export default function Welcome(){
                     <div className="column is-fourth"></div>
                 </div>
                 
-            </div>
-            
-        </div>
+            </>
     );
 }
