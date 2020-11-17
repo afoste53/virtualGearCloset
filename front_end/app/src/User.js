@@ -17,7 +17,7 @@ export default function User(props){
     <div className="seeThrough">
             
             
-            
+    {console.log(props.password)}
             <div className="hero" id="menu">
                 <Container>
                     <DropdownButton stick="top" menuAlign="left" title="Menu" id="dropdown-menu">
@@ -30,7 +30,7 @@ export default function User(props){
                     </DropdownButton>
                 </Container>
                     <div className="has-text-centered hero-body">
-                        <h1 id="welcomeBackHeader" className="title has-text-bold">Welcome Back {props.userObj.name}</h1>
+                        <h1 id="welcomeBackHeader" className="title has-text-bold">Welcome Back {props.name}</h1>
                     </div>
             </div>
         <Container id="closetContainer" >

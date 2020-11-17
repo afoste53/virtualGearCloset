@@ -20,18 +20,18 @@ export default function CreateAccount (props) {
         <form className="has-text-bold has-text-white">
             <strong className="has-text-white">Create Account</strong>
             <br/>
-            <field>
-                <lable>Enter your email</lable>
+            <div>
+                <label>Enter your email</label>
                 <input name="email" className="input is-medium seeThrough" type="text" onChange={handleChange}/>
-            </field>
-            <field>
-                <lable>Name</lable>
+            </div>
+            <div>
+                <label>Name</label>
                 <input name="name" className="input is-medium seeThrough" type="text" onChange={handleChange}/>
-            </field>
-            <field>
+            </div>
+            <div>
                 <label>Password</label>
                 <input name="password"  className="input is-medium seeThrough" type="password" onChange={handleChange}/>
-            </field>
+            </div>
             
         </form>
     </div>);
