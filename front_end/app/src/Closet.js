@@ -1,27 +1,28 @@
 import React, {useState}from 'react';
+import {Container} from 'react-bootstrap';
+import Gear from './Gear.js';
+import 'bulma/css/bulma.css';
 
-export default function Closet () {
+export default function Closet (props) {
     const [editMode, setEditMode] = useState(false); 
-    const [closetProps, setClosetProps] = useState({});
-    /** 
-     * 
-     * {name: string, 
-     *   email: string,
-     *   gear: []}
-     * 
-     * 
-     * useEffect -> get data from backend and render as 'closet'
-     **/
+    const [closetProperty, setClosetProperty] = useState({});
+   
+
+let headerSpec = {type: 'th',spec: ['Name', 'Weght','Price']};
 
 
-
-    return(<div className="container is-max-desktop">
-        <ul className="closet">
-            
-        </ul>
-
-
-
-    </div>);
+    return(
+    <Container className="closetDiv has-background-primary-light">
+        <table>
+            <tbody>
+                <Gear specs={headerSpec} />
+                <Gear />
+                <Gear />
+                <Gear />
+                <Gear />           
+            </tbody>
+        </table>
+    </Container>
+    );
 
 }

@@ -16,14 +16,14 @@ export default function Login(props){
     return(<form className="has-text-bold has-text-white" >
             <strong className="has-text-white">Login </strong>
             <br/>
-            <div>
+            <field>
                 <label>Email</label>
-                <input name="email" onChange={handleChange} className="input is-large seeThrough" type="email" placeholder="Email"/>
-            </div>
-            <div>
+                <input name="email" onChange={handleChange} className="input is-large seeThrough" type="text" placeholder="Username"/>
+            </field>
+            <field>
                 <label>Password</label>
                 <input name="password" onChange={handleChange} className="input is-large seeThrough" type="password" placeholder="Password"/> 
-            </div>
+            </field>
             
         </form>);
 }
