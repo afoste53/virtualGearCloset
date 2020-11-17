@@ -1,14 +1,15 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Dropdown, Container, DropdownButton } from 'react-bootstrap';
+import React, {useState} from 'react';
+import { Dropdown, Container, DropdownButton, Button } from 'react-bootstrap';
 import 'bulma/css/bulma.css';
 import './App.css';
 import Closet from './Closet';
 import NewCloset from './newClosetView';
 
 export default function User(props){
+    const [newCloset, setNewCloset] = useState(false);
+    
     let generateCloset = () => {
-        ReactDOM.render(<NewCloset />, document.getElementById('newCloset'));
+        newCloset ? setNewCloset(false) : setNewCloset(true);
     }
 
 
@@ -38,8 +39,9 @@ export default function User(props){
             <br />
             <br />
             <br />
-            <Container id='newCloset' onClick={generateCloset}>
-                <button className="button is-primary">Create New Closet</button>
+            <Container id='newCloset' >
+                {!newCloset && <Button onClick={generateCloset} className="button is-primary">Create New Closet</Button>}
+                {newCloset && <NewCloset generateCloset={generateCloset}/>}
             </Container>
         </Container>
 

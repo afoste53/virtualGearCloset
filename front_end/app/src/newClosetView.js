@@ -1,10 +1,9 @@
 import React from 'react';
 import 'bulma/css/bulma.css';
 import './App.css';
-import {Container} from 'react-bootstrap';
+import {Container, Button} from 'react-bootstrap';
  
 export default function NewCloset(props){
-
 
     return(
         <Container className="newClosetContainer">
@@ -48,9 +47,20 @@ export default function NewCloset(props){
                         <div className="column is-one-fifth" >
                             <input type="checkbox" value="quantity"/><label>Quantity</label>
                         </div>
+                        <div className="column is-two-fifths">
+                            <input type="text" placeholder="Custom Field One"/>
+                        </div>
+                        <div className="column is-two-fifths">
+                            <input type="text" placeholder="Custom Field Two"/>
+                        </div>
                     </div>
+                    <Container className="columns"> 
+                        <Button className="button column is-two-fifth is-primary">Go!</Button>
+                        <div className="column is-one-fifth"></div>
+                        <Button className="button column is-two-fifth is-danger" onClick={props.generateCloset}>Cancel</Button>
+                    </Container>
                 </div>
-                {/* custom choice */}
+                
             </form>
         </Container>
     );
