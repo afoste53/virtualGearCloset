@@ -17,7 +17,6 @@ export default function User(props){
     <div className="seeThrough">
             
             
-    {console.log(props.password)}
             <div className="hero" id="menu">
                 <Container>
                     <DropdownButton stick="top" menuAlign="left" title="Menu" id="dropdown-menu">

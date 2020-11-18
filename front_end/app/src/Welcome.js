@@ -21,7 +21,6 @@ export default function Welcome(props){
         setEmail(newAccount.email);
         setPassword(newAccount.password);
         setName(newAccount.name);
-        console.log('email ' + email + ' password '+ password + " name " + name);
     }
  
     const [hasAccount, setHasAccount] = useState(true);
