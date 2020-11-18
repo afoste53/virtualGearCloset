@@ -4,34 +4,22 @@ import Gear from './Gear.js';
 import 'bulma/css/bulma.css';
 
 export default function Closet (props) {
-    //const [editMode, setEditMode] = useState(false); 
-    //const [closetProperty, setClosetProperty] = useState({});
-    const [gear, setGear] = useState();
-    
-    //set up headers
-    let headers =[];
-    const specIterator = props.specs.values();
-    for(const v of specIterator){
-        headers.push(v)
-    }
+    const [editMode, setEditMode] = useState(false); 
+    const [closetProperty, setClosetProperty] = useState({});
+   
 
-    let gearArr=[];
-    for(const g in props.gear){
-        gearArr.push(<Gear key={props.gear[g].name} gear={props.gear[g]}/>); 
-    }
-    
-    
-    
+let headerSpec = {type: 'th',spec: ['Name', 'Weght','Price']};
+
 
     return(
     <Container className="closetDiv has-background-primary-light">
-        <h2 className="has-text-bold">{props.name}</h2>
         <table>
             <tbody>
-                <tr>
-                    {headers.map((h) => <th key={h}>{h}</th>)}
-                </tr>
-                {gearArr}
+                <Gear specs={headerSpec} />
+                <Gear />
+                <Gear />
+                <Gear />
+                <Gear />           
             </tbody>
         </table>
     </Container>
