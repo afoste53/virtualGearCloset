@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import 'bulma/css/bulma.css';
 import './App.css';
 import {Container, Button} from 'react-bootstrap';
@@ -7,22 +7,16 @@ export default function NewCloset(props){
     const [page, setPage] = useState(1);
     const [name, setName] = useState('');
     const [checked, setChecked] = useState([]);
-
-    useEffect(() => {
-
-    }, [page]);
     
     const handleSubmit = () => {
         if(page===1){
-            if(document.getElementById('nameInput').value != ''){
+            if(document.getElementById('nameInput').value !== ''){
                 setName(document.getElementById('nameInput').value);
-                setPage(2);
+                setPage((prev) => prev+1);
             }else{
                 document.getElementById('nameInput').placeholder = 'Must enter a name';
             }
-            
-            
-        }else{
+        }else if(page===2){
             const checkboxes = document.querySelectorAll(`input:checked`);
             let values = [];
             checkboxes.forEach((checkbox) => {
@@ -35,7 +29,19 @@ export default function NewCloset(props){
             custom2 !== '' && values.push(custom2);
 
             setChecked(values);
+            alert(values.length);
+            if(values.length > 3){
+                setPage(prev => prev + 1);
+            }else{
+                //handle   
+            }
+        }else{
+            //handle
         }
+    }
+
+    const goBack = () => {
+        setPage(prev => prev-1);
     }
 
     const page1 = (<Container >
@@ -92,19 +98,26 @@ export default function NewCloset(props){
                 </div>
             </div>
         </div>);
-    
-        
+
+    const page3 = (<div></div>);   
+
+ 
+
     return(
         <Container className="newClosetContainer">
             <form className="is-primary">
-                {page === 1 ? page1 : page2}
+                {page === 1 ? page1 :  page2 }                
                 
-                
+               
                <Container className="columns" id="buttons"> 
-                    <Button className="button column is-two-fifth is-primary" onClick={handleSubmit}>{page===1 ? "Next!" : "Go!"}</Button>
+                    <Button className="button column is-one-fifth is-danger" onClick={props.generateCloset}>Cancel</Button>
                     <div className="column is-one-fifth"></div>
-                    <Button className="button column is-two-fifth is-danger" onClick={props.generateCloset}>Cancel</Button>
+                    {page !== 1 ? <Button className="button column is-one-fifth is-warning" onClick={goBack}>Back</Button> : <div className="column is-one-fifth"></div>}
+                    <div className="column is-one-fifth"></div>
+                    <Button className="button column is-one-fifth is-primary" onClick={handleSubmit}>{page===1 ? "Next!" : "Go!"}</Button>
                 </Container>
+                   
+               
                 
                 
             </form>

@@ -49,22 +49,19 @@ export default function Welcome(props){
                                 data: {user: email,
                                     password: password}
                                 });
-                let newData = null;
-                if(result.status === 200){
-                    let res = await axios({
-                        method: 'get',
-                        url: 'http://localhost:3030/users' + result.data
-                    });
-                    newData = res.data;
-                }
-            if(newData != null){
-                props.setLogBool(true);
-                props.setUserId(newData.userId);
-                props.setEmail(newData.email);
-                props.setName(newData.name);
-                props.setPassword(newData.password);
-                props.setCloset(newData.closet);                //ReactDOM.render(<User userObj={newData} />, document.getElementById('rooted'));
-            }
+                                if(result.status === 200){
+                                    let res = await axios({
+                                        method: 'get',
+                                        url: 'http://localhost:3030/users' + result.data
+                                    });
+                    
+                                    props.setLogBool(true);
+                                    props.setUserId(res.data.userId);
+                                    props.setEmail(res.data.email);
+                                    props.setName(res.data.name);
+                                    props.setPassword(res.data.password);
+                                    props.setCloset(res.data.closets);    
+                                }
         }else{
             let result = await axios({method: 'post',
                                     url: 'http://localhost:3030/users',
