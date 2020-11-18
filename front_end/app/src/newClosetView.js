@@ -14,14 +14,12 @@ export default function NewCloset(props){
     
     const handleSubmit = () => {
         if(page===1){
-            if(document.getElementById('nameInput').value != ''){
+            if(document.getElementById('nameInput').value !== ''){
                 setName(document.getElementById('nameInput').value);
                 setPage(2);
             }else{
                 document.getElementById('nameInput').placeholder = 'Must enter a name';
             }
-            
-            
         }else{
             const checkboxes = document.querySelectorAll(`input:checked`);
             let values = [];

@@ -2,13 +2,16 @@ import React from 'react';
 import 'bulma/css/bulma.css';
 
 export default function Gear (props) {
-    let r;
+    let k = Object.keys(props.gear);
+    let row = [];
+    k.forEach(k => {
+        row.push(props.gear[k]);
+    });
     
-    props.specs!=undefined ? r=(<tr className="columns">
-            <th className="gear column">{props.specs.spec[0]}</th>
-            <th className="gear column">{props.specs.spec[1]}</th>
-            <th className="gear column">{props.specs.spec[2]}</th>
-        </tr>) : r= <tr></tr>;
 
-    return r;
+    return (
+        <tr key={props.gear.name}>
+            {row.map((d)=>{return <td>{d}</td>})}
+        </tr>
+    );
 }

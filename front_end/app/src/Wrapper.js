@@ -14,8 +14,13 @@ export default function Wrapper (){
 
 return(<div className="header-image">
     <div className="hero is-fullheight" id="rooted">
-    {!logBool && <Welcome setUserId={setUserId} setEmail={setEmail} setName={setName} setPassword={setPassword} setCloset={setCloset} setUser={setUser} setLogBool={setLogBool}/>}
-    {logBool && <User userId={userId} email={email} name={name} password={password} closet={closet} user={user} setLogBool={setLogBool}/>}
+    {!logBool && <Welcome setUserId={setUserId} setEmail={setEmail} setName={setName} 
+                            setPassword={setPassword} setCloset={setCloset} setUser={setUser}
+                             setLogBool={setLogBool}/>}
+    {logBool && <User userId={userId} email={email} name={name} password={password} 
+                            closet={closet} setUserId={setUserId} setEmail={setEmail}
+                            setName={setName} setPassword={setPassword} setCloset={setCloset}  
+                            user={user} setLogBool={setLogBool}/>}
     </div>
 </div>);
 }

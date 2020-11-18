@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Dropdown, Container, DropdownButton, Button } from 'react-bootstrap';
 import 'bulma/css/bulma.css';
 import './App.css';
@@ -6,6 +6,27 @@ import Closet from './Closet';
 import NewCloset from './newClosetView';
 
 export default function User(props){
+  //  const [closetObj, setClosetObj] = useState();
+    let initialClosets = () => {
+        let returnArr=[];
+        for(const k in props.closet){
+            k.length >=1 && k !== props.closet[undefined] &&  returnArr.push(props.closet[k]);  
+        }
+        
+        return (<div>
+                    {returnArr.map(e => <Closet name={e.name} 
+                                                cId={e.cId}
+                                                owner={e.owner}
+                                                gear={e.gear}
+                                                specs={e.specs}
+                                                key="{e.cId}"/>)}
+                </div>)
+    }
+   
+    useEffect(()=>{
+      
+    },[]);
+    
     const [newCloset, setNewCloset] = useState(false);
     
     let generateCloset = () => {
@@ -33,7 +54,9 @@ export default function User(props){
                     </div>
             </div>
         <Container id="closetContainer" >
-            <Closet className="has-text-centered closetDiv"/>
+            <Container id="currClosets">
+                {initialClosets()}
+            </Container>
             
             <br />
             <br />
