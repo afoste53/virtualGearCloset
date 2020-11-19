@@ -54,10 +54,7 @@ export default function Welcome(props){
                                         method: 'get',
                                         url: 'http://localhost:3030/users' + result.data
                                     });
-                                    
-                                    console.log('res '+ res);
-
-                                    
+                    
                                     props.setLogBool(true);
                                     props.setUserId(res.data.userId);
                                     props.setEmail(res.data.email);
