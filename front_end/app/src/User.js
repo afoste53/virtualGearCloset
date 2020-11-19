@@ -62,7 +62,7 @@ export default function User(props){
             <br />
             <Container id='newCloset' >
                 {!newCloset && <Button onClick={generateCloset} className="button is-primary">Create New Closet</Button>}
-                {newCloset && <NewCloset generateCloset={generateCloset}/>}
+                {newCloset && <NewCloset setCloset={props.setCloset} name={props.name} email={props.email} password={props.password} otherCloset={props.closet} userId={props.userId} generateCloset={generateCloset}/>}
             </Container>
         </Container>
         
