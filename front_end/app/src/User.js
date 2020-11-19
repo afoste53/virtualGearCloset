@@ -6,22 +6,26 @@ import Closet from './Closet';
 import NewCloset from './newClosetView';
 
 export default function User(props){
-    const [closetObj, setClosetObj] = useState();
-    //const[closetVar, setClosetVar] = useState(false);
-
-    useEffect(()=>{
+  //  const [closetObj, setClosetObj] = useState();
+    let initialClosets = () => {
         let returnArr=[];
         for(const k in props.closet){
             k.length >=1 && k !== props.closet[undefined] &&  returnArr.push(props.closet[k]);  
         }
-        setClosetObj((<div>{returnArr.map(e => <Closet name={e.name} 
+
+        return (<div>
+                    {returnArr.map(e => <Closet name={e.name} 
                                                 cId={e.cId}
                                                 owner={e.owner}
                                                 gear={e.gear}
                                                 specs={e.specs}
                                                 key={e.cId}/>)}
-        </div>));
-    },[props.closet]);
+                </div>)
+    }
+
+    useEffect(()=>{
+
+    },[]);
 
     const [newCloset, setNewCloset] = useState(false);
 
@@ -50,7 +54,7 @@ export default function User(props){
         <Container id="closetContainer" >
             
             <Container id="currClosets">
-                {closetObj}
+                {initialClosets()}
             </Container>
 
             <br />
@@ -58,7 +62,7 @@ export default function User(props){
             <br />
             <Container id='newCloset' >
                 {!newCloset && <Button onClick={generateCloset} className="button is-primary">Create New Closet</Button>}
-                {newCloset && <NewCloset userId={props.userId} setCloset={props.setCloset} otherCloset={props.closet} generateCloset={generateCloset}/>}
+                {newCloset && <NewCloset generateCloset={generateCloset}/>}
             </Container>
         </Container>
         
