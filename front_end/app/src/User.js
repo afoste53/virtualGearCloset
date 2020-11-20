@@ -6,28 +6,37 @@ import Closet from './Closet';
 import NewCloset from './newClosetView';
 
 export default function User(props){
-  //  const [closetObj, setClosetObj] = useState();
+  const [aBool, setABool] = useState(false);
+  const [secCloset, setSecCloset] = useState();
+  const [newCloset, setNewCloset] = useState(false);
+  const [isHiddenGen, setIsHiddenGen] = useState(false);
+
+
     let initialClosets = () => {
         let returnArr=[];
         for(const k in props.closet){
             k.length >=1 && k !== props.closet[undefined] &&  returnArr.push(props.closet[k]);  
         }
 
+
         return (<div>
                     {returnArr.map(e => <Closet name={e.name} 
-                                                cId={e.cId}
-                                                owner={e.owner}
-                                                gear={e.gear}
-                                                specs={e.specs}
-                                                key={e.cId}/>)}
+            cId={e.cId}
+            owner={e.owner}
+            gear={e.gear}
+            specs={e.specs}
+            key={e.cId}/>
+                            )}
                 </div>)
     }
 
+    let a =props.setSec;
+
     useEffect(()=>{
-
-    },[]);
-
-    const [newCloset, setNewCloset] = useState(false);
+        console.log("secCloset");
+        console.log(secCloset);
+        props.setSec(secCloset);
+    },[secCloset, a]);
 
     let generateCloset = () => {
         newCloset ? setNewCloset(false) : setNewCloset(true);
@@ -61,8 +70,9 @@ export default function User(props){
             <br />
             <br />
             <Container id='newCloset' >
-                {!newCloset && <Button onClick={generateCloset} className="button is-primary">Create New Closet</Button>}
-                {newCloset && <NewCloset generateCloset={generateCloset}/>}
+                {!newCloset && <Button onClick={generateCloset} className="button is-primary m-4">Create New Closet</Button>}
+                {newCloset && <NewCloset aBool={aBool} setABool={setABool} setSecCloset={setSecCloset} name={props.name} email={props.email} password={props.password} otherCloset={props.closet} userId={props.userId} generateCloset={generateCloset}/>}
+                
             </Container>
         </Container>
         

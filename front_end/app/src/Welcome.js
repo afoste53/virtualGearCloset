@@ -54,13 +54,15 @@ export default function Welcome(props){
                                         method: 'get',
                                         url: 'http://localhost:3030/users' + result.data
                                     });
-                    
+                                                                        
                                     props.setLogBool(true);
                                     props.setUserId(res.data.userId);
                                     props.setEmail(res.data.email);
                                     props.setName(res.data.name);
                                     props.setPassword(res.data.password);
                                     props.setCloset(res.data.closets);    
+                                    console.log(props.closet);
+                                    console.log("welcome");
                                 }
         }else{
             let result = await axios({method: 'post',

@@ -13,12 +13,24 @@
 .closetDiv{
   background-color: hsla(206, 55%, 99%, 0.7);
   color: hsl(0, 0%, 1%);
-  max-height: 45vh !important;
+  max-height: 75vh !important;
   width: 75% !important;
   overflow: auto;
   padding: 10px;  
   margin: 25px;
 }
+  
+/* .detailedCloset{
+  font-size: 22px;
+  background-color: hsla(206, 55%, 99%, 0.7);
+  color: hsl(0, 0%, 1%);
+  min-height: 55vh;
+  max-height: 95vh !important;
+  width: 75% !important;
+  overflow: auto;
+  padding: 10px;  
+  margin: 25px;
+} */
 
 .newClosetButton{
   background-color: hsla(206, 55%, 99%, 0.7);
