@@ -11,13 +11,23 @@
   border:none !important;
 }
 .closetDiv{
-  background-color: hsla(206, 55%, 99%, 0.7);
+  background-color: hsla(206, 55%, 99%, 0.2);
   color: hsl(0, 0%, 1%);
   max-height: 75vh !important;
-  width: 75% !important;
+  width: 100% !important;
   overflow: auto;
   padding: 10px;  
   margin: 25px;
+}
+
+.noFriendsContainer{
+  background-color: hsla(206, 55%, 99%, 0.3);
+  color: hsl(0, 0%, 1%);
+  height: 20vh !important;
+  width: 50% !important;
+  overflow: auto;
+  padding: 5px;  
+  margin: 10px;
 }
   
 /* .detailedCloset{

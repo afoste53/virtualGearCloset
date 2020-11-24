@@ -1,16 +1,16 @@
-import React, {useState, useEffect} from 'react';
-//import ReactDOM from 'react-dom';
+import React, {useState} from 'react';
 import 'bulma/css/bulma.css';
 import './App.css';
+import {Container, Button} from 'react-bootstrap';
 import Login from './Login';
 import CreateAccount from 'createAccount';
-import axios from 'axios';
-//import User from './User.js';
 
 export default function Welcome(props){
-    const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
-    const [name, setName] = useState();
+    const [email, setEmail] = useState(null);
+    const [password, setPassword] = useState(null);
+    const [name, setName] = useState(null);
+    const [newEmail, setNewEmail] = useState(null);
+    const [newPassword, setNewPassword] = useState(null);
 
     const handleLogin = login => {
         setEmail(login.email);
@@ -18,92 +18,41 @@ export default function Welcome(props){
     }
 
     const handleCreateAccount = newAccount =>{
-        setEmail(newAccount.email);
-        setPassword(newAccount.password);
+        setNewEmail(newAccount.email);
+        setNewPassword(newAccount.password);
         setName(newAccount.name);
     }
- 
-    const [hasAccount, setHasAccount] = useState(true);
-    const [firstButton, setFirstButton] = useState('Login');
-    const [secondButton, setSecondButton] = useState('Create Account');
 
-    useEffect(() => {
-        firstButton === 'Login' ? setHasAccount(true) : setHasAccount(false);
-    }, [firstButton]);
-
-    const handleClick = () =>{
-        if(hasAccount){
-            setFirstButton('Create Account')
-            setSecondButton('Go Back');
-        }else{
-            setFirstButton('Login');
-            setSecondButton('Create Account');
-        }
+    const handleLoginClick = () => {
+        props.loginSignUp(email, password, null);
     }
-
-    const handleLoginClick = async () => {
-        if(hasAccount){
-            let result = await axios({
-                                method: 'post',
-                                url: 'http://localhost:3030/login',
-                                data: {user: email,
-                                    password: password}
-                                });
-                                if(result.status === 200){
-                                    let res = await axios({
-                                        method: 'get',
-                                        url: 'http://localhost:3030/users' + result.data
-                                    });
-                                                                        
-                                    props.setLogBool(true);
-                                    props.setUserId(res.data.userId);
-                                    props.setEmail(res.data.email);
-                                    props.setName(res.data.name);
-                                    props.setPassword(res.data.password);
-                                    props.setCloset(res.data.closets);    
-                                    console.log(props.closet);
-                                    console.log("welcome");
-                                }
-        }else{
-            let result = await axios({method: 'post',
-                                    url: 'http://localhost:3030/users',
-                                    data: {
-                                        email: email,
-                                        name: name,
-                                        password: password
-                                    }
-                                    });
-            let newData = result.data;
-            if(result.status===200){
-                props.setLogBool(true);
-                props.setUserId(newData.userId);
-                props.setEmail(newData.email);
-                props.setName(newData.name);
-                props.setPassword(newData.password);
-                props.setCloset(newData.closet); 
-            }
+                                
+    const handleCreateClick = () =>{
+        props.loginSignUp(newEmail, newPassword, name);
                     
-        }
     }
+    
     
     return(<>
         
-                <div className="hero-body"id="rooted">
-                    <div>
-                        <h1 className="title has-text-bold">Welcome to Virtual Gear Closet!</h1>
-                        <h3 className="subtitle">The Answer to All Your Gear Organizing Needs</h3>
-                    </div>
+            <div className="hero-body"id="rooted">
+                <div>
+                    <h1 className="title has-text-bold">Welcome to Virtual Gear Closet!</h1>
+                    <h3 className="subtitle">The Answer to All Your Gear Organizing Needs</h3>
                 </div>
-                <div className="container columns">
-                    <div className="column is-one-fourth"></div>
-                    <div className="column is-one-half">
-                    {hasAccount === true && <Login onChange={handleLogin} />}
-                    {hasAccount === false && <CreateAccount onChange={handleCreateAccount}/>}
-                    <button className="button is-info is-light is-inverted is-outlined" onClick={handleLoginClick}>{firstButton}</button>
-    <button className="button is-info is-light is-inverted is-outlined" onClick={handleClick}>{secondButton}</button>
-                    </div>
-                    <div className="column is-fourth"></div>
-                </div>
+            </div>
+            <Container className="columns">    
+                <Container className="column">
+                    <Login onChange={handleLogin} />
+                    <Button className="button is-primary is-medium m-3" onClick={handleLoginClick}>Login</Button>
+                </Container>
+                <Container className="column">
+                    <CreateAccount onChange={handleCreateAccount}/>
+                    <Button className="button is-primary is-medium m-3" onClick={handleCreateClick}>Create Account</Button>
+                </Container>
+            </Container>
+                
+            
                 
             </>
     );

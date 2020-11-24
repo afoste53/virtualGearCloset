@@ -1,50 +1,135 @@
 import React, {useState, useEffect} from 'react';
+import { Dropdown, Container, DropdownButton } from 'react-bootstrap';
+import 'bulma/css/bulma.css';
+import axios from 'axios';
 import Welcome from './Welcome.js';
 import User from './User.js';
-
+import Plan from './Plan';
 
 export default function Wrapper (){
-    const [logBool, setLogBool] = useState(false);
-    const [user, setUser] = useState(null);
-    const [userId, setUserId] = useState();
-    const [email, setEmail] = useState();
-    const [name, setName] = useState();
-    const [password, setPassword] = useState();
-    const [closet, setCloset] = useState();
-    const [sec, setSec] = useState();
+    const [loggedIn, setLoggedIn] = useState(false);
+    const [page, setPage] = useState(null);
+    const [userId, setUserId] = useState(null);
+    const [email, setEmail] = useState(null);
+    const [name, setName] = useState(null);
+    const [password, setPassword] = useState(null);
+    const [closetIds, setClosetIds] = useState(null);
+    const [closetObjs, setClosetObjs] = useState([]);
+    const [mostRecent, setMostRecent] = useState([]);
 
-    const setClosetWaterfall = (id, closet) => {
-        setCloset((prev) => ({...prev, [id]:closet}));
-        console.log('wrapper');
-        console.log(closet);
-        return closet;
+    const setUpClosetObjs = async () => {
+        setClosetObjs([]);
+        for(let i = 0; i < closetIds.length; i++){
+            let c = await axios({method: 'get',
+                                url: 'http://localhost:3030/closets' + i
+                                });
+            if(closetObjs == null){
+                setClosetObjs(c.data);
+                console.log(closetObjs);
+            }else if(!closetObjs.includes(c.data)){
+                setClosetObjs(prev => [...prev, c.data]);
+            }      
+        }
     }
 
+    //runs at begginning, when new closet is added, or when closet is removed?
+    //when to update backend?
     useEffect(()=>{
-        console.log("sec");
-        console.log(sec);
-        let h = closet;
-        console.log('h');
-        console.log(h);
-        if(sec!== undefined){
-        console.log('in if');
-            h[sec.cId] = sec;
-        setCloset(h);
-        console.log('closet');
-        console.log(closet);
+        if(closetIds != null ){
+            if(closetIds.length >= 0){
+                setUpClosetObjs();
+                setLoggedIn(true);
+                setPage(1);
+            }
+        }    
+    },[closetIds]);
+
+  
+
+    const loginSignUp = async (email, password, name) => {
+        //existing user login
+        if(name === null){
+            let idResult = await axios({method: 'post',
+                                    url: 'http://localhost:3030/login',
+                                    data: {
+                                        email: email,
+                                        password: password
+                                    }
+                                });
+        if(idResult.status === 200){
+            let result = await axios({method: 'get',
+                                    url: 'http://localhost:3030/users' + idResult.data
+                                    });
+            if(result.status === 200){
+                setName(result.data.name);
+                setEmail(result.data.email);
+                setPassword(result.data.password);
+                setClosetIds(result.data.closets);
+                setUserId(result.data.userId);            
+            }
         }
-    },[sec, closet]);
 
+        }//create new user
+        else if(name !== null){
+            let result = await axios({method: 'post',
+                                    url: 'http://localhost:3030/users',
+                                    data: {
+                                        email: email,
+                                        password: password,
+                                        name: name
+                                    }
+                                    });
+            if(result.status === 200){
+                setName(result.data.name);
+                setEmail(result.data.email);
+                setPassword(result.data.password);
+                setClosetIds(result.data.closets);
+                setUserId(result.data.userId);
+                setLoggedIn(true);
+                setPage(1);
+            }
+        }
+    }
 
-return(<div className="header-image">
+return(
+
+    <div className="header-image">
     <div className="hero is-fullheight" id="rooted">
-    {!logBool && <Welcome setUserId={setUserId} setEmail={setEmail} setName={setName} 
-                            setPassword={setPassword} setCloset={setCloset} setUser={setUser}
-                             setLogBool={setLogBool}/>}
-    {logBool && <User userId={userId} setSec={setSec}email={email} name={name} password={password} 
-                            closet={closet} setUserId={setUserId} setEmail={setEmail}
-                            setName={setName} setPassword={setPassword} setClosetWaterfall={setClosetWaterfall}  
-                            user={user} setLogBool={setLogBool} setCloset={setCloset}/>}
+
+        {!loggedIn && <Container className="hero">
+                            <Welcome loginSignUp={loginSignUp}/>
+                    </Container>}
+
+        {loggedIn && <div className="hero" id="menu">
+            <Container>
+                <DropdownButton stick="top" menuAlign="left" title="Menu" id="dropdown-menu">
+                    <Dropdown.Item eventKey="1">Home</Dropdown.Item>
+                    <Dropdown.Item eventKey="2" >Plan a Trip</Dropdown.Item>
+                    <Dropdown.Divider />
+                    <Dropdown.Item eventKey="4">About</Dropdown.Item>
+                    <Dropdown.Item eventKey="5">Log out</Dropdown.Item>
+                </DropdownButton>
+            </Container>
+            <div className="has-text-centered hero-body">
+                <h1 id="welcomeBackHeader" className="title has-text-bold">
+                                            {loggedIn ? "Welcome Back " + name + "!" :
+                                                   "Let's Plan a Trip " + name + "!"}
+                </h1>
+            </div>
+        </div>}
+
+        {loggedIn && <Container >
+            {page===1 && <User className="m-6" 
+                                    name={name}  
+                                    closetIds={closetIds}
+                                    setClosetIds={setClosetIds}
+                                    closetObjs={closetObjs}
+                                    setClosetObjs={setClosetObjs}
+                                    setMostRecent={setMostRecent}
+                                    mostRecent={mostRecent}/>}
+            
+            {page===2 && <Plan className="m-6" password={password} name={name} closets={closetIds}/>} 
+        </Container>}
     </div>
 </div>);
 }
