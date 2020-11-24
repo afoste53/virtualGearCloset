@@ -21,7 +21,7 @@ export default function Wrapper (){
         setClosetObjs([]);
         for(let i = 0; i < closetIds.length; i++){
             let c = await axios({method: 'get',
-                                url: 'http://localhost:3030/closets' + i
+                                url: 'http://localhost:3030/closets' + closetIds[i]
                                 });
             if(closetObjs == null){
                 setClosetObjs(c.data);
@@ -65,7 +65,7 @@ export default function Wrapper (){
                 setEmail(result.data.email);
                 setPassword(result.data.password);
                 setClosetIds(result.data.closets);
-                setUserId(result.data.userId);            
+                setUserId(result.data.userId);
             }
         }
 
@@ -126,7 +126,9 @@ return(
                                     closetObjs={closetObjs}
                                     setClosetObjs={setClosetObjs}
                                     setMostRecent={setMostRecent}
-                                    mostRecent={mostRecent}/>}
+                                    mostRecent={mostRecent}
+                                    password={password}
+                                    email={email}/>}
             
             {page===2 && <Plan className="m-6" password={password} name={name} closets={closetIds}/>} 
         </Container>}
