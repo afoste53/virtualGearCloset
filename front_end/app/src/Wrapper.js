@@ -16,6 +16,26 @@ export default function Wrapper (){
     const [closetIds, setClosetIds] = useState(null);
     const [closetObjs, setClosetObjs] = useState([]);
     const [mostRecent, setMostRecent] = useState([]);
+    
+    const newClosetId = async (newId) =>{
+       if(closetIds.length > 0){
+           setClosetIds(prev => [...prev, newId]);
+       }else{
+           setClosetIds([newId]);
+       }
+       let temp = closetIds;
+       temp.push(newId);
+       let result = await axios({method: 'put',
+                                url: 'http://localhost:3030/users' + userId,
+                                data: {
+                                    email: email,
+                                    name: name,
+                                    password: password,
+                                    closets: temp
+                                }
+                                });
+                         
+    }
 
     const setUpClosetObjs = async () => {
         setClosetObjs([]);
@@ -76,7 +96,8 @@ export default function Wrapper (){
                                     data: {
                                         email: email,
                                         password: password,
-                                        name: name
+                                        name: name,
+                                        closets: []
                                     }
                                     });
             if(result.status === 200){
@@ -128,7 +149,9 @@ return(
                                     setMostRecent={setMostRecent}
                                     mostRecent={mostRecent}
                                     password={password}
-                                    email={email}/>}
+                                    email={email}
+                                    userId={userId}
+                                    newClosetId={newClosetId}/>}
             
             {page===2 && <Plan className="m-6" password={password} name={name} closets={closetIds}/>} 
         </Container>}
