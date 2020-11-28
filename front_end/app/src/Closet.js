@@ -52,7 +52,7 @@ export default function Closet (props)  {
     const deleteCloset = async () => {
         let tempIds = props.closetIds.filter(i => i !== parseInt(props.cId));
        let result = await axios({method: 'put',
-                                url: 'http://localhost:3030/users' + props.owner,
+                                url: 'https://virtual-gear-closet.herokuapp.com/users' + props.owner,
                                 data:{
                                     email: props.email,
                                     name: props.ownerName,
@@ -62,7 +62,7 @@ export default function Closet (props)  {
                                 });
         if(result.data === props.owner){
             let r2 = await axios({method: 'delete',
-                                url: 'http://localhost:3030/closets' + props.cId
+                                url: 'https://virtual-gear-closet.herokuapp.com/closets' + props.cId
                                 });
             if(r2.data){
                 props.setClosetIds(tempIds);
@@ -85,7 +85,7 @@ export default function Closet (props)  {
 
         props.gear.push(saveArr);
             let result = await axios ({method: 'put',
-                                    url: 'http://localhost:3030/closets' + props.cId,
+                                    url: 'https://virtual-gear-closet.herokuapp.com/closets' + props.cId,
                                     data: {
                                         "name": props.name,
                                         "owner": props.owner,
@@ -95,7 +95,7 @@ export default function Closet (props)  {
                                 });
             if(result.status === 200){
                 let result = await axios({method: 'get',
-                                            url: 'http://localhost:3030/closets' + props.cId});
+                                            url: 'https://virtual-gear-closet.herokuapp.com/closets' + props.cId});
                 headers.forEach(h => document.getElementById(h).value ='');
                 props.setMostRecent(result.data);
             }

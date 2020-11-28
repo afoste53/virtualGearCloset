@@ -4,7 +4,6 @@ import 'bulma/css/bulma.css';
 import axios from 'axios';
 import Welcome from './Welcome.js';
 import User from './User.js';
-import Plan from './Plan';
 
 export default function Wrapper (){
     const [loggedIn, setLoggedIn] = useState(false);
@@ -26,7 +25,7 @@ export default function Wrapper (){
        let temp = closetIds;
        temp.push(newId);
        let result = await axios({method: 'put',
-                                url: 'http://localhost:3030/users' + userId,
+                                url: 'https://virtual-gear-closet.herokuapp.com/users' + userId,
                                 data: {
                                     email: email,
                                     name: name,
@@ -41,7 +40,7 @@ export default function Wrapper (){
         setClosetObjs([]);
         for(let i = 0; i < closetIds.length; i++){
             let c = await axios({method: 'get',
-                                url: 'http://localhost:3030/closets' + closetIds[i]
+                                url: 'https://virtual-gear-closet.herokuapp.com/closets' + closetIds[i]
                                 });
             if(closetObjs == null){
                 setClosetObjs(c.data);
@@ -70,7 +69,7 @@ export default function Wrapper (){
         //existing user login
         if(name === null){
             let idResult = await axios({method: 'post',
-                                    url: 'http://localhost:3030/login',
+                                    url: 'https://virtual-gear-closet.herokuapp.com/login',
                                     data: {
                                         email: email,
                                         password: password
@@ -78,7 +77,7 @@ export default function Wrapper (){
                                 });
         if(idResult.status === 200){
             let result = await axios({method: 'get',
-                                    url: 'http://localhost:3030/users' + idResult.data
+                                    url: 'https://virtual-gear-closet.herokuapp.com/users' + idResult.data
                                     });
             if(result.status === 200){
                 setName(result.data.name);
@@ -92,7 +91,7 @@ export default function Wrapper (){
         }//create new user
         else if(name !== null){
             let result = await axios({method: 'post',
-                                    url: 'http://localhost:3030/users',
+                                    url: 'https://virtual-gear-closet.herokuapp.com/users',
                                     data: {
                                         email: email,
                                         password: password,
@@ -124,8 +123,8 @@ return(
         {loggedIn && <div className="hero" id="menu">
             <Container>
                 <DropdownButton stick="top" menuAlign="left" title="Menu" id="dropdown-menu">
-                    <Dropdown.Item eventKey="1">Home</Dropdown.Item>
-                    <Dropdown.Item eventKey="2" >Plan a Trip</Dropdown.Item>
+                    <Dropdown.Item onClick={() => setPage(1)} eventKey="1">Home</Dropdown.Item>
+                    <Dropdown.Item onClick={() => setPage(2)} eventKey="2" >Plan a Trip</Dropdown.Item>
                     <Dropdown.Divider />
                     <Dropdown.Item eventKey="4">About</Dropdown.Item>
                     <Dropdown.Item eventKey="5">Log out</Dropdown.Item>
@@ -133,7 +132,7 @@ return(
             </Container>
             <div className="has-text-centered hero-body">
                 <h1 id="welcomeBackHeader" className="title has-text-bold">
-                                            {loggedIn ? "Welcome Back " + name + "!" :
+                                            {page === 1 ? "Welcome Back " + name + "!" :
                                                    "Let's Plan a Trip " + name + "!"}
                 </h1>
             </div>
@@ -152,8 +151,6 @@ return(
                                     email={email}
                                     userId={userId}
                                     newClosetId={newClosetId}/>}
-            
-            {page===2 && <Plan className="m-6" password={password} name={name} closets={closetIds}/>} 
         </Container>}
     </div>
 </div>);
