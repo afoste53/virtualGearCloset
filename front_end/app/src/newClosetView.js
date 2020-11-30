@@ -42,7 +42,7 @@ export default function NewCloset(props){
 
    const handleSubmit = async (newSpecs, newName) => {
        let res1 = await axios({method: 'post',
-                                url: 'https://virtual-gear-closet.herokuapp.com/closets',
+                                url: 'http://localhost:3030/closets',
                                 data: {'ownerId' : props.ownerId,
                                         'name' : newName,
                                         'specs' : newSpecs,

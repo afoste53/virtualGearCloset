@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import { Container, Button } from 'react-bootstrap';
 import 'bulma/css/bulma.css';
 import './App.css';
@@ -27,7 +27,7 @@ export default function User(props){
                                                     setClosetObjs={props.setClosetObjs} setClosetIds={props.setClosetIds}
                                                     owner={c.owner} ownerName={props.name} specs={c.specs} gear={c.gear}
                                                     setMostRecent={props.setMostRecent} mostRecent={props.mostRecent}
-                                                    password={props.password}
+                                                    password={props.password} setNames={props.setNames} names={props.names}
                                                     />)}
             </Container>
             {!newClosetBool && <Button onClick={handleNewClosetClick} className="button m-4 is-primary">Add New Closet!</Button>}

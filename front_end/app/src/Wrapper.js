@@ -4,6 +4,7 @@ import 'bulma/css/bulma.css';
 import axios from 'axios';
 import Welcome from './Welcome.js';
 import User from './User.js';
+import Plan from './Plan.js';
 
 export default function Wrapper (){
     const [loggedIn, setLoggedIn] = useState(false);
@@ -15,6 +16,7 @@ export default function Wrapper (){
     const [closetIds, setClosetIds] = useState(null);
     const [closetObjs, setClosetObjs] = useState([]);
     const [mostRecent, setMostRecent] = useState([]);
+    const [names, setNames] = useState([]);
     
     const newClosetId = async (newId) =>{
        if(closetIds.length > 0){
@@ -25,7 +27,7 @@ export default function Wrapper (){
        let temp = closetIds;
        temp.push(newId);
        let result = await axios({method: 'put',
-                                url: 'https://virtual-gear-closet.herokuapp.com/users' + userId,
+                                url: 'http://localhost:3030/users' + userId,
                                 data: {
                                     email: email,
                                     name: name,
@@ -40,7 +42,7 @@ export default function Wrapper (){
         setClosetObjs([]);
         for(let i = 0; i < closetIds.length; i++){
             let c = await axios({method: 'get',
-                                url: 'https://virtual-gear-closet.herokuapp.com/closets' + closetIds[i]
+                                url: 'http://localhost:3030/closets' + closetIds[i]
                                 });
             if(closetObjs == null){
                 setClosetObjs(c.data);
@@ -49,6 +51,7 @@ export default function Wrapper (){
                 setClosetObjs(prev => [...prev, c.data]);
             }      
         }
+        
     }
 
     //runs at begginning, when new closet is added, or when closet is removed?
@@ -56,9 +59,9 @@ export default function Wrapper (){
     useEffect(()=>{
         if(closetIds != null ){
             if(closetIds.length >= 0){
-                setUpClosetObjs();
+                setUpClosetObjs(); 
                 setLoggedIn(true);
-                setPage(1);
+                setPage(1);       
             }
         }    
     },[closetIds]);
@@ -69,7 +72,7 @@ export default function Wrapper (){
         //existing user login
         if(name === null){
             let idResult = await axios({method: 'post',
-                                    url: 'https://virtual-gear-closet.herokuapp.com/login',
+                                    url: 'http://localhost:3030/login',
                                     data: {
                                         email: email,
                                         password: password
@@ -77,7 +80,7 @@ export default function Wrapper (){
                                 });
         if(idResult.status === 200){
             let result = await axios({method: 'get',
-                                    url: 'https://virtual-gear-closet.herokuapp.com/users' + idResult.data
+                                    url: 'http://localhost:3030/users' + idResult.data
                                     });
             if(result.status === 200){
                 setName(result.data.name);
@@ -91,7 +94,7 @@ export default function Wrapper (){
         }//create new user
         else if(name !== null){
             let result = await axios({method: 'post',
-                                    url: 'https://virtual-gear-closet.herokuapp.com/users',
+                                    url: 'http://localhost:3030/users',
                                     data: {
                                         email: email,
                                         password: password,
@@ -104,7 +107,7 @@ export default function Wrapper (){
                 setEmail(result.data.email);
                 setPassword(result.data.password);
                 setClosetIds(result.data.closets);
-                setUserId(result.data.userId);
+                setUserId(result.data.userId);  
                 setLoggedIn(true);
                 setPage(1);
             }
@@ -150,7 +153,16 @@ return(
                                     password={password}
                                     email={email}
                                     userId={userId}
-                                    newClosetId={newClosetId}/>}
+                                    newClosetId={newClosetId}
+                                    setNames={setNames}
+                                    names={names}/>}
+            {page===2 && <Plan className="m-6"
+                                    name={name}
+                                    closetIds={closetIds}
+                                    closetObjs={closetObjs}
+                                    email={email}
+                                    names={names}
+                                    namesArr={["gilbert", "tonya", "tina"]}/>}
         </Container>}
     </div>
 </div>);

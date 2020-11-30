@@ -1,5 +1,4 @@
-import React, {useEffect, useState} from 'react';
-import ReactDOM from 'react-dom';
+import React, {useEffect, useState, useCallback} from 'react';
 import {Container, Button} from 'react-bootstrap';
 import 'bulma/css/bulma.css';
 import axios from 'axios';
@@ -11,7 +10,8 @@ export default function Closet (props)  {
     const [addBool, setAddBool] = useState(false);
     const [addVar, setAddVar] = useState(null);
     const [deleteBool, setDeleteBool] = useState(false);
-    
+
+
     //set up headers
     let headers =[];
     const specIterator = props.specs.values();
@@ -23,24 +23,89 @@ export default function Closet (props)  {
         setEditGearVar(editparam);
     }
 
+    const setUp = useCallback((name) => {
+        if(!props.names.includes(name) ){
+            let temp = props.names;
+            if(!temp.includes(name)){
+                temp.push(name);
+                props.setNames(temp);
+            }
+        }
+    }, [props]);
+
+    const deleteIndividual = useCallback((index) => {
+        let temp = [];
+        for(let i = 0; i < props.gear.length; i++){
+            i !== index && temp.push(props.gear[i]);
+        }
+        let tObjs = props.closetObjs;
+        tObjs[props.cId].gear = temp;
+        props.setClosetObjs(tObjs);
+        props.setMostRecent(!props.mostRecent);
+        updateGear(temp);
+
+    },[props]);
+
+    const updateGear = async (arr) =>{
+        let res = axios({method: 'put',
+                        url: 'http://localhost:3030/closets' + props.cId,
+                        data: {
+                            owner: props.owner,
+                            name: props.name,
+                            specs: props.specs,
+                            gear: arr
+                        }
+                    });
+        console.log(res);
+    }
+
+    // const saveIndividual = useCallback((index) => {
+    //     let newProps = [];
+    //     console.log(index);
+    //     //editGearVar[index].props.children[0].forEach(c => newProps.push(c.props.value));
+    //     //editGearVar[index].props.children[0].forEach(c => console.log(c.props));
+    //     let temp = [];
+    //     for(let i = 0; i < props.gear.length; i++){
+    //         if(i !== index){
+    //             temp.push(props.gear[i]);
+    //         }else{
+    //            temp.push(newProps);
+    //         }
+    //     }
+    //     console.log(temp);
+    // }, [props])
+
+    // const addData = (event) => {
+    //     console.log(event.target);
+
+    // }
+
     useEffect(()=>{
         let row = [];
         let edits = [];
         for(let i = 0; i < props.gear.length; i++){
-            row[i] = props.gear[i].map(g => <td className="is-size-6" key={g}>{g}</td>);
-            edits[i] = props.gear[i].map(g => <td className="{'comp' + ${i}} is-size-6" key={g+1}><input placeholder={g}/></td>)
+            row[i] = props.gear[i].map(g => <td className="is-size-6" key={parseInt(g.cId)+i}>{g}</td>);
+            edits[i] = props.gear[i].map(g => <td data={g} className="mx-6 is-size-6" key={g.cId + 390}>{g}</td>)
+            setUp(props.gear[i][0]);           
         }
-        // edits.forEach(arr => arr.push(<td><Button key={arr.length} onClick={saveEdits} 
-        //     className="button is-small is-primary">
-                // Save</Button></td>));
-        let gearArr = row.map(r => <tr key={Math.random()*26}>{r}</tr>);
-        let editArr = edits.map(r => <tr key={Math.random()*47}>{r}</tr>);
-        setMap(gearArr, editArr);
-    },[props.gear, props.mostRecent]);
-    
-    const saveEdits = (e) => {
-       console.log(ReactDOM.findDOMNode(e.target));
+        
 
+        let gearArr = row.map(r => <tr key={Math.random(27)*26}>{r}</tr>);
+        let editArr = [];
+        for(let i = 0; i< edits.length; i++){
+            editArr[i] = <tr id={i} key={i*Math.random()}>
+                            {edits[i]}  
+                            <td><Button onClick={()=>deleteIndividual(i)}className="button is-small is-danger">Delete Item</Button></td>
+                           </tr>;
+        }
+        setMap(gearArr, editArr);
+    },[props.gear, props.mostRecent, deleteIndividual, setUp]);
+    
+    const saveChanges = () => {
+        for(let i = 0; i < props.gear.length; i++){
+
+        }
+        setEditing(!editing);
     }
 
     const addGear = () => {
@@ -52,7 +117,7 @@ export default function Closet (props)  {
     const deleteCloset = async () => {
         let tempIds = props.closetIds.filter(i => i !== parseInt(props.cId));
        let result = await axios({method: 'put',
-                                url: 'https://virtual-gear-closet.herokuapp.com/users' + props.owner,
+                                url: 'http://localhost:3030/users' + props.owner,
                                 data:{
                                     email: props.email,
                                     name: props.ownerName,
@@ -62,15 +127,13 @@ export default function Closet (props)  {
                                 });
         if(result.data === props.owner){
             let r2 = await axios({method: 'delete',
-                                url: 'https://virtual-gear-closet.herokuapp.com/closets' + props.cId
+                                url: 'http://localhost:3030/closets' + props.cId
                                 });
             if(r2.data){
                 props.setClosetIds(tempIds);
             }
         }
     }
-
-    
 
     const saveGear = async () => {
         let saveArr = [];
@@ -85,7 +148,7 @@ export default function Closet (props)  {
 
         props.gear.push(saveArr);
             let result = await axios ({method: 'put',
-                                    url: 'https://virtual-gear-closet.herokuapp.com/closets' + props.cId,
+                                    url: 'http://localhost:3030/closets' + props.cId,
                                     data: {
                                         "name": props.name,
                                         "owner": props.owner,
@@ -95,11 +158,16 @@ export default function Closet (props)  {
                                 });
             if(result.status === 200){
                 let result = await axios({method: 'get',
-                                            url: 'https://virtual-gear-closet.herokuapp.com/closets' + props.cId});
+                                            url: 'http://localhost:3030/closets' + props.cId});
                 headers.forEach(h => document.getElementById(h).value ='');
                 props.setMostRecent(result.data);
             }
         }
+    }
+
+    const editSetUp = () =>{
+        setAddBool(false);
+        setEditing(!editing);
     }
 
     return(    
@@ -124,13 +192,13 @@ export default function Closet (props)  {
                 {addBool && <tr>{addVar}<td><Button onClick={saveGear} className="button is-small is-primary">Save</Button></td></tr>}
             </tbody>
         </table>
-        <Container className="buttons are-normal is-centered" >
+        {!editing && (<Container className="buttons are-normal is-centered" >
             <Button onClick={addGear} className="button is-success mx-2" >{!addBool ? "Add Gear" : "Done Adding"}</Button>
-            <Button onClick={() => setEditing(!editing)} className="button is-primary mx-2" >Edit Gear</Button>
+            <Button onClick={editSetUp} className="button is-primary mx-2" >Edit Gear</Button>
             <Button onClick={() => setDeleteBool(!deleteBool)} className="button is-danger mx-2" >{deleteBool ? "Cancel" : "Delete Closet"}</Button>
-        </Container>
+        </Container>)}
+        {editing && (<Container className="buttons are-normal is-centered">
+                            <Button onClick={saveChanges} className="button is-success">Save Changes</Button>
+                    </Container>)}
     </Container>)
-
-    
-
-    }
+}

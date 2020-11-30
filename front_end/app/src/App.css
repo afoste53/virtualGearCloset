@@ -30,6 +30,24 @@
   margin: 10px;
 }
 
+.white-background{
+  background-color: hsla(206, 55%, 99%, 0.7);
+  height: 80vh !important;
+  overflow: hidden;
+}
+
+.normal-background{
+  background-color: hsla(206, 55%, 99%, 0.2);
+  color: hsl(0, 0%, 1%);
+  overflow: auto;
+  padding: 5px;  
+  margin: 10px;
+}
+
+.fifty-width{
+  width: 75% !important;
+}
+
 .newClosetButton{
   background-color: hsla(206, 55%, 99%, 0.7);
   color: hsl(0, 0%, 1%);
@@ -46,4 +64,7 @@ table{
   
 }
 
-
+#toGo{
+  height: 70%;
+  overflow: auto;
+}
