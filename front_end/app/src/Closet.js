@@ -33,6 +33,21 @@ export default function Closet (props)  {
         }
     }, [props]);
 
+    
+    const updateGear = useCallback(async(arr) =>{
+        let res = axios({method: 'put',
+                        url: 'http://localhost:3030/closets' + props.cId,
+                        data: {
+                            owner: props.owner,
+                            name: props.name,
+                            specs: props.specs,
+                            gear: arr
+                        }
+                    });
+        console.log(res);
+    },[props]);
+
+
     const deleteIndividual = useCallback((index) => {
         let temp = [];
         for(let i = 0; i < props.gear.length; i++){
@@ -44,20 +59,7 @@ export default function Closet (props)  {
         props.setMostRecent(!props.mostRecent);
         updateGear(temp);
 
-    },[props]);
-
-    const updateGear = async (arr) =>{
-        let res = axios({method: 'put',
-                        url: 'http://localhost:3030/closets' + props.cId,
-                        data: {
-                            owner: props.owner,
-                            name: props.name,
-                            specs: props.specs,
-                            gear: arr
-                        }
-                    });
-        console.log(res);
-    }
+    },[props, updateGear]);
 
     // const saveIndividual = useCallback((index) => {
     //     let newProps = [];

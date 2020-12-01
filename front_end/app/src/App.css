@@ -68,3 +68,7 @@ table{
   height: 70%;
   overflow: auto;
 }
+
+.scrollable{
+  overflow: auto;
+}
