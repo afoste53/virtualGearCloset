@@ -27,7 +27,7 @@ export default function Wrapper (){
        let temp = closetIds;
        temp.push(newId);
        let result = await axios({method: 'put',
-                                url: 'http://localhost:3030/users' + userId,
+                                url: 'https://virtual-gc.herokuapp.com/users' + userId,
                                 data: {
                                     email: email,
                                     name: name,
@@ -42,7 +42,7 @@ export default function Wrapper (){
         setClosetObjs([]);
         for(let i = 0; i < closetIds.length; i++){
             let c = await axios({method: 'get',
-                                url: 'http://localhost:3030/closets' + closetIds[i]
+                                url: 'https://virtual-gc.herokuapp.com/closets' + closetIds[i]
                                 });
             if(closetObjs == null){
                 setClosetObjs(c.data);
@@ -70,17 +70,19 @@ export default function Wrapper (){
 
     const loginSignUp = async (email, password, name) => {
         //existing user login
+        console.log('here');
         if(name === null){
             let idResult = await axios({method: 'post',
-                                    url: 'http://localhost:3030/login',
+                                    url: 'https://virtual-gc.herokuapp.com/login',
                                     data: {
                                         email: email,
                                         password: password
                                     }
                                 });
+                                
         if(idResult.status === 200){
             let result = await axios({method: 'get',
-                                    url: 'http://localhost:3030/users' + idResult.data
+                                    url: 'https://virtual-gc.herokuapp.com/users' + idResult.data
                                     });
             if(result.status === 200){
                 setName(result.data.name);
@@ -94,7 +96,7 @@ export default function Wrapper (){
         }//create new user
         else if(name !== null){
             let result = await axios({method: 'post',
-                                    url: 'http://localhost:3030/users',
+                                    url: 'https://virtual-gc.herokuapp.com/users',
                                     data: {
                                         email: email,
                                         password: password,
