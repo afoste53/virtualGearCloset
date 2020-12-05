@@ -61,27 +61,6 @@ export default function Closet (props)  {
 
     },[props, updateGear]);
 
-    // const saveIndividual = useCallback((index) => {
-    //     let newProps = [];
-    //     console.log(index);
-    //     //editGearVar[index].props.children[0].forEach(c => newProps.push(c.props.value));
-    //     //editGearVar[index].props.children[0].forEach(c => console.log(c.props));
-    //     let temp = [];
-    //     for(let i = 0; i < props.gear.length; i++){
-    //         if(i !== index){
-    //             temp.push(props.gear[i]);
-    //         }else{
-    //            temp.push(newProps);
-    //         }
-    //     }
-    //     console.log(temp);
-    // }, [props])
-
-    // const addData = (event) => {
-    //     console.log(event.target);
-
-    // }
-
     useEffect(()=>{
         let row = [];
         let edits = [];

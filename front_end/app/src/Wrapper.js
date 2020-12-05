@@ -132,7 +132,7 @@ return(
                     <Dropdown.Item onClick={() => setPage(2)} eventKey="2" >Plan a Trip</Dropdown.Item>
                     <Dropdown.Divider />
                     <Dropdown.Item eventKey="4">About</Dropdown.Item>
-                    <Dropdown.Item eventKey="5">Log out</Dropdown.Item>
+                    <Dropdown.Item onClick={() => setPage(0)} eventKey="5">Log out</Dropdown.Item>
                 </DropdownButton>
             </Container>
             <div className="has-text-centered hero-body">
