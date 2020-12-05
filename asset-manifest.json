@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/virtualGearCloset/static/css/main.1395bb64.chunk.css",
+    "main.js": "/virtualGearCloset/static/js/main.a9e3ff0d.chunk.js",
+    "main.js.map": "/virtualGearCloset/static/js/main.a9e3ff0d.chunk.js.map",
+    "runtime-main.js": "/virtualGearCloset/static/js/runtime-main.19787b38.js",
+    "runtime-main.js.map": "/virtualGearCloset/static/js/runtime-main.19787b38.js.map",
+    "static/css/2.6328ffca.chunk.css": "/virtualGearCloset/static/css/2.6328ffca.chunk.css",
+    "static/js/2.01456223.chunk.js": "/virtualGearCloset/static/js/2.01456223.chunk.js",
+    "static/js/2.01456223.chunk.js.map": "/virtualGearCloset/static/js/2.01456223.chunk.js.map",
+    "index.html": "/virtualGearCloset/index.html",
+    "static/css/2.6328ffca.chunk.css.map": "/virtualGearCloset/static/css/2.6328ffca.chunk.css.map",
+    "static/css/main.1395bb64.chunk.css.map": "/virtualGearCloset/static/css/main.1395bb64.chunk.css.map",
+    "static/js/2.01456223.chunk.js.LICENSE.txt": "/virtualGearCloset/static/js/2.01456223.chunk.js.LICENSE.txt",
+    "static/media/App.css": "/virtualGearCloset/static/media/mountainBackground.d50f70c9.JPG"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.19787b38.js",
+    "static/css/2.6328ffca.chunk.css",
+    "static/js/2.01456223.chunk.js",
+    "static/css/main.1395bb64.chunk.css",
+    "static/js/main.a9e3ff0d.chunk.js"
+  ]
+}
